@@ -1,37 +1,36 @@
 import { initializeApp } from "firebase/app";
-
 import {
   getAuth,
   GoogleAuthProvider,
 } from "firebase/auth";
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCX1m7XJU73L77iSeL7-8oB-oCItbaqngM",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
 
   authDomain:
-    "neostream-be9d7.firebaseapp.com",
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
 
-  projectId: "neostream-be9d7",
+  projectId:
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
 
   storageBucket:
-    "neostream-be9d7.firebasestorage.app",
+    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
 
   messagingSenderId:
-    "799441604974",
+    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 
   appId:
-    "1:799441604974:web:4233eaa145be11007a317f",
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 
   measurementId:
-    "G-SDSKWVMYEX",
+    process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-export const auth =
-  getAuth(app);
+export const auth = getAuth(app);
 
 export const googleProvider =
   new GoogleAuthProvider();
+
+export default app;

@@ -1,11 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
 import {
   onAuthStateChanged,
@@ -26,6 +22,16 @@ export default function Navbar() {
       onAuthStateChanged(
         auth,
         (currentUser) => {
+          console.log(
+            "USER:",
+            currentUser
+          );
+
+          console.log(
+            "PHOTO URL:",
+            currentUser?.photoURL
+          );
+
           setUser(currentUser);
         }
       );
@@ -41,89 +47,114 @@ export default function Navbar() {
     };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-md">
-      <div className="flex items-center justify-between px-12 py-6">
-        <h1 className="text-3xl font-bold text-red-500">
-          NeoStream
+    <nav className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+
+      <div className="flex items-center justify-between px-6 md:px-12 py-5">
+
+        <h1 className="text-4xl md:text-5xl font-black tracking-[3px] text-red-500 drop-shadow-lg">
+          NEOSTREAM
         </h1>
 
-        <div className="flex items-center gap-10">
-          <button>
+        <div className="flex items-center gap-6 md:gap-12 text-base md:text-lg font-medium">
+
+          <Link
+            href="/"
+            className="hover:text-red-500 transition"
+          >
             Home
-          </button>
+          </Link>
 
-          <button>
+          <Link
+            href="/movies"
+            className="hover:text-red-500 transition"
+          >
             Movies
-          </button>
+          </Link>
 
-          <button>
+          <Link
+            href="/subscription"
+            className="hover:text-red-500 transition"
+          >
             Premium
-          </button>
+          </Link>
 
           {user ? (
             <div className="relative">
-             <img
-  src={
-    user.photoURL
-      ? user.photoURL
-      : `https://ui-avatars.com/api/?name=${user.displayName}&background=ff0000&color=fff`
-  }
-  onError={(e) => {
-    e.currentTarget.src =
-      `https://ui-avatars.com/api/?name=${user.displayName}&background=ff0000&color=fff`;
-  }}
-  alt="profile"
-  onClick={() =>
-    setOpen(!open)
-  }
-  className="w-14 h-14 object-cover rounded-full cursor-pointer border-2 border-white"
-/>
+
+              <img
+                src={
+                  user?.photoURL ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    user?.displayName ||
+                    "User"
+                  )}&background=ff0000&color=fff`
+                }
+                referrerPolicy="no-referrer"
+                alt="profile"
+                onClick={() =>
+                  setOpen(!open)
+                }
+                className="w-14 h-14 rounded-full object-cover border-2 border-white cursor-pointer"
+              />
+
               {open && (
-                <div className="absolute right-4 top-14 w-72 bg-[#0F172A] border border-white/10 rounded-2xl p-5 shadow-2xl">
-                  <div className="flex items-center gap-3 mb-5">
+                <div className="absolute right-0 top-16 w-80 bg-[#0F172A] border border-white/10 rounded-3xl p-5 shadow-2xl">
+
+                  <div className="flex items-center gap-4 mb-5">
+
                     <img
                       src={
-                        user.photoURL ||
-                        `https://ui-avatars.com/api/?name=${user.displayName}`
+                        user?.photoURL ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user?.displayName ||
+                          "User"
+                        )}`
                       }
+                      referrerPolicy="no-referrer"
                       alt="profile"
-                      className="w-18 h-18 rounded-full object-cover"
+                      className="w-16 h-16 rounded-full object-cover"
                     />
 
                     <div>
                       <h2 className="font-bold text-lg">
                         {
-                          user.displayName
+                          user?.displayName
                         }
                       </h2>
 
                       <p className="text-sm text-gray-400 break-all">
-                        {user.email}
+                        {user?.email}
                       </p>
                     </div>
+
                   </div>
 
                   <button
                     onClick={
                       handleLogout
                     }
-                    className="w-full h-12 bg-red-800 rounded-xl font-bold hover:bg-red-600 transition"
+                    className="w-full h-12 bg-red-600 hover:bg-red-700 rounded-xl font-bold transition"
                   >
                     Logout
                   </button>
+
                 </div>
               )}
+
             </div>
           ) : (
             <Link
               href="/login"
-              className="bg-red-800 px-5 py-2 rounded-xl font-bold hover:bg-red-600 transition"
+              className="bg-red-600 hover:bg-red-700 px-7 py-3 rounded-xl shadow-lg transition"
             >
               Login
             </Link>
           )}
+
         </div>
+
       </div>
+
     </nav>
   );
 }

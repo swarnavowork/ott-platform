@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyCX1m7XJU73L77iSeL7-8oB-oCItbaqngM",
 

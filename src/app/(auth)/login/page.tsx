@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
 import { useState } from "react";
-
 import { useRouter } from "next/navigation";
 
 import {
@@ -11,52 +9,52 @@ import {
 } from "firebase/auth";
 
 import { auth } from "@/src/lib/firebase";
-
-import {
-  loginWithGoogle,
-} from "@/src/services/authService";
+import { loginWithGoogle } from "@/src/services/authService";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const [email, setEmail] =
-    useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [password, setPassword] =
-    useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] =
-    useState(false);
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
 
-  const handleLogin =
-    async () => {
-      try {
-        setLoading(true);
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+      router.push("/");
+    } catch (error: any) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        router.push("/");
-      } catch (error: any) {
-        alert(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const handleGoogleLogin = async () => {
+    try {
+      setLoading(true);
 
-  const handleGoogleLogin =
-    async () => {
       await loginWithGoogle();
 
       router.push("/");
-    };
+    } catch (error: any) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-[#07111F] flex items-center justify-center text-white px-5">
-      <div className="bg-[#0F172A] p-10 rounded-3xl w-full max-w-md border border-white/10">
+    <main className="min-h-screen bg-[#07111F] flex items-center justify-center px-5 text-white">
+      <div className="w-full max-w-md bg-[#0F172A] p-10 rounded-3xl border border-white/10">
+
         <h1 className="text-5xl font-bold mb-2">
           Welcome Back
         </h1>
@@ -82,40 +80,48 @@ export default function LoginPage() {
           onChange={(e) =>
             setPassword(e.target.value)
           }
-          className="w-full h-14 px-5 rounded-xl bg-white/10 mb-5 outline-none"
+          className="w-full h-14 px-5 rounded-xl bg-white/10 mb-3 outline-none"
         />
+
+        <div className="flex justify-end mb-5">
+          <Link
+            href="/forgot-password"
+            className="text-sm text-red-500"
+          >
+            Forgot Password?
+          </Link>
+        </div>
 
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full h-14 bg-red-500 rounded-xl font-bold hover:bg-red-600 transition"
+          className="w-full h-14 bg-red-500 rounded-xl font-bold hover:bg-red-600 transition disabled:opacity-50"
         >
           {loading
-            ? "Logging in..."
+            ? "Logging In..."
             : "Login"}
         </button>
 
         <div className="flex items-center gap-3 my-7">
-          <div className="flex-1 h-[1px] bg-white/20" />
+          <div className="flex-1 h-[1px] bg-white/20"></div>
 
           <span className="text-gray-400 text-sm">
             OR
           </span>
 
-          <div className="flex-1 h-[1px] bg-white/20" />
+          <div className="flex-1 h-[1px] bg-white/20"></div>
         </div>
 
         <button
-          onClick={
-            handleGoogleLogin
-          }
-          className="w-full h-14 bg-white text-black rounded-xl font-bold"
+          onClick={handleGoogleLogin}
+          disabled={loading}
+          className="w-full h-14 bg-white text-black rounded-xl font-bold hover:bg-gray-100 transition"
         >
           Continue with Google
         </button>
 
-        <p className="text-gray-400 mt-7 text-center">
-          Don’t have account?{" "}
+        <p className="text-center text-gray-400 mt-7">
+          Don't have an account?{" "}
           <Link
             href="/signup"
             className="text-red-500"

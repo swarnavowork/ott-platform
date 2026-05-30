@@ -33,12 +33,12 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+    <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
 
       <div className="flex items-center justify-between px-4 md:px-12 py-4">
 
         {/* Logo */}
-        <h1 className="text-2xl md:text-5xl font-black tracking-[3px] text-red-500">
+        <h1 className="text-3xl md:text-5xl font-black tracking-[4px] text-red-500 drop-shadow-lg">
           NEOSTREAM
         </h1>
 
@@ -47,21 +47,21 @@ export default function Navbar() {
 
           <Link
             href="/"
-            className="hover:text-red-500 transition"
+            className="hover:text-red-500 transition duration-300 hover:scale-105"
           >
             Home
           </Link>
 
           <Link
             href="/movies"
-            className="hover:text-red-500 transition"
+            className="hover:text-red-500 transition duration-300 hover:scale-105"
           >
             Movies
           </Link>
 
           <Link
             href="/subscription"
-            className="hover:text-red-500 transition"
+            className="hover:text-red-500 transition duration-300 hover:scale-105"
           >
             Premium
           </Link>
@@ -129,7 +129,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="bg-red-600 hover:bg-red-700 px-7 py-3 rounded-xl"
+              className="bg-red-600 hover:bg-red-700 px-7 py-3 rounded-xl shadow-lg shadow-red-600/30 font-semibold transition-all duration-300 hover:scale-105"
             >
               Login
             </Link>

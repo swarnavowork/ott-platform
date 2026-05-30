@@ -2,19 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-
 import { auth } from "@/src/lib/firebase";
 
 export default function Navbar() {
-  const [user, setUser] =
-    useState<any>(null);
-
-  const [open, setOpen] =
+  const [user, setUser] = useState<any>(null);
+  const [open, setOpen] = useState(false);
+  const [mobileMenu, setMobileMenu] =
     useState(false);
 
   useEffect(() => {
@@ -22,16 +19,6 @@ export default function Navbar() {
       onAuthStateChanged(
         auth,
         (currentUser) => {
-          console.log(
-            "USER:",
-            currentUser
-          );
-
-          console.log(
-            "PHOTO URL:",
-            currentUser?.photoURL
-          );
-
           setUser(currentUser);
         }
       );
@@ -39,23 +26,24 @@ export default function Navbar() {
     return () => unsubscribe();
   }, []);
 
-  const handleLogout =
-    async () => {
-      await signOut(auth);
-
-      setOpen(false);
-    };
+  const handleLogout = async () => {
+    await signOut(auth);
+    setOpen(false);
+    setMobileMenu(false);
+  };
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
 
-      <div className="flex items-center justify-between px-6 md:px-12 py-5">
+      <div className="flex items-center justify-between px-4 md:px-12 py-4">
 
-        <h1 className="text-4xl md:text-5xl font-black tracking-[3px] text-red-500 drop-shadow-lg">
+        {/* Logo */}
+        <h1 className="text-2xl md:text-5xl font-black tracking-[3px] text-red-500">
           NEOSTREAM
         </h1>
 
-        <div className="flex items-center gap-6 md:gap-12 text-base md:text-lg font-medium">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-12 text-lg font-medium">
 
           <Link
             href="/"
@@ -85,12 +73,11 @@ export default function Navbar() {
                 src={
                   user?.photoURL ||
                   `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                    user?.displayName ||
-                    "User"
+                    user?.displayName || "User"
                   )}&background=ff0000&color=fff`
                 }
-                referrerPolicy="no-referrer"
                 alt="profile"
+                referrerPolicy="no-referrer"
                 onClick={() =>
                   setOpen(!open)
                 }
@@ -107,19 +94,16 @@ export default function Navbar() {
                         user?.photoURL ||
                         `https://ui-avatars.com/api/?name=${encodeURIComponent(
                           user?.displayName ||
-                          "User"
+                            "User"
                         )}`
                       }
-                      referrerPolicy="no-referrer"
                       alt="profile"
                       className="w-16 h-16 rounded-full object-cover"
                     />
 
                     <div>
                       <h2 className="font-bold text-lg">
-                        {
-                          user?.displayName
-                        }
+                        {user?.displayName}
                       </h2>
 
                       <p className="text-sm text-gray-400 break-all">
@@ -133,7 +117,7 @@ export default function Navbar() {
                     onClick={
                       handleLogout
                     }
-                    className="w-full h-12 bg-red-600 hover:bg-red-700 rounded-xl font-bold transition"
+                    className="w-full h-12 bg-red-600 hover:bg-red-700 rounded-xl font-bold"
                   >
                     Logout
                   </button>
@@ -145,7 +129,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="bg-red-600 hover:bg-red-700 px-7 py-3 rounded-xl shadow-lg transition"
+              className="bg-red-600 hover:bg-red-700 px-7 py-3 rounded-xl"
             >
               Login
             </Link>
@@ -153,7 +137,76 @@ export default function Navbar() {
 
         </div>
 
+        {/* Mobile Hamburger */}
+        <button
+          onClick={() =>
+            setMobileMenu(!mobileMenu)
+          }
+          className="md:hidden text-white text-3xl"
+        >
+          ☰
+        </button>
+
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenu && (
+        <div className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10">
+
+          <div className="flex flex-col gap-5 p-6 text-lg">
+
+            <Link
+              href="/"
+              onClick={() =>
+                setMobileMenu(false)
+              }
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/movies"
+              onClick={() =>
+                setMobileMenu(false)
+              }
+            >
+              Movies
+            </Link>
+
+            <Link
+              href="/subscription"
+              onClick={() =>
+                setMobileMenu(false)
+              }
+            >
+              Premium
+            </Link>
+
+            {user ? (
+              <button
+                onClick={
+                  handleLogout
+                }
+                className="bg-red-600 py-3 rounded-xl font-bold"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() =>
+                  setMobileMenu(false)
+                }
+                className="bg-red-600 py-3 rounded-xl text-center font-bold"
+              >
+                Login
+              </Link>
+            )}
+
+          </div>
+
+        </div>
+      )}
 
     </nav>
   );

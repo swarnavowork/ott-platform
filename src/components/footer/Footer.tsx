@@ -62,58 +62,71 @@ export default function Footer() {
           </div>
 
           {/* COMPANY */}
-          <div>
-            <h2 className="text-xl font-bold mb-6">
-              Company
-            </h2>
+         <div>
+  <h2 className="text-xl font-bold mb-6">
+    Company
+  </h2>
 
-            <ul className="space-y-4 text-gray-400">
+  <ul className="space-y-4 text-gray-400">
 
-              <li className="hover:text-white cursor-pointer transition">
-                About Us
-              </li>
+    <li>
+      <a
+        href="/about-us"
+        className="hover:text-white transition"
+      >
+        About Us
+      </a>
+    </li>
 
-              <li className="hover:text-white cursor-pointer transition">
-                Careers
-              </li>
+    <li>
+      <a
+        href="/help-and-support"
+        className="hover:text-white transition"
+      >
+        Help & Support
+      </a>
+    </li>
 
-              <li className="hover:text-white cursor-pointer transition">
-                Contact
-              </li>
-
-              <li className="hover:text-white cursor-pointer transition">
-                Blog
-              </li>
-
-            </ul>
-          </div>
+  </ul>
+</div>
 
           {/* SUPPORT */}
-          <div>
-            <h2 className="text-xl font-bold mb-6">
-              Support
-            </h2>
+         <div>
+  <h2 className="text-xl font-bold mb-6">
+    Support
+  </h2>
 
-            <ul className="space-y-4 text-gray-400">
+  <ul className="space-y-4 text-gray-400">
 
-              <li className="hover:text-white cursor-pointer transition">
-                Help Center
-              </li>
+    <li>
+      <a
+        href="/privacy-policy"
+        className="hover:text-white transition"
+      >
+        Privacy Policy
+      </a>
+    </li>
 
-              <li className="hover:text-white cursor-pointer transition">
-                Privacy Policy
-              </li>
+    <li>
+      <a
+        href="/terms-and-conditions"
+        className="hover:text-white transition"
+      >
+        Terms & Conditions
+      </a>
+    </li>
 
-              <li className="hover:text-white cursor-pointer transition">
-                Terms & Conditions
-              </li>
+    <li>
+      <a
+        href="/refund-policy"
+        className="hover:text-white transition"
+      >
+        Refund Policy
+      </a>
+    </li>
 
-              <li className="hover:text-white cursor-pointer transition">
-                Refund Policy
-              </li>
-
-            </ul>
-          </div>
+  </ul>
+</div>
 
           {/* APP INFO */}
           <div>
@@ -139,31 +152,16 @@ export default function Footer() {
 
         {/* BOTTOM BAR */}
 
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div className="border-t border-white/10 mt-12 pt-8 text-center">
 
-          <p className="text-gray-500 text-sm">
-            © 2025 NeoStream. All Rights Reserved.
-          </p>
+  <p className="text-gray-500 text-sm">
+    © 2026 NeoStream. All Rights Reserved.
+  </p>
 
-          <div className="flex gap-6 text-sm text-gray-500">
+</div>
 
-            <span className="hover:text-white cursor-pointer">
-              Privacy
-            </span>
-
-            <span className="hover:text-white cursor-pointer">
-              Terms
-            </span>
-
-            <span className="hover:text-white cursor-pointer">
-              Cookies
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
+        
+</div>
     </footer>
   );
 }
